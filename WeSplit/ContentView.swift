@@ -15,17 +15,26 @@ struct ContentView: View {
     let tipPercentages = [10, 15, 20, 0]
 
     var body: some View {
-        Form {
-            Section {
-                // $ represents two-way binding
-                // replace text with value to implicate the double property
-                TextField("Amount", value: $checkAmount, format: .currency(code: Locale.current.currencyCode ?? "TWD"))
-                    .keyboardType(.decimalPad)
-            }
+        NavigationView {
+            Form {
+                Section {
+                    // $ represents two-way binding
+                    // replace text with value to implicate the double property
+                    TextField("Amount", value: $checkAmount, format: .currency(code: Locale.current.currencyCode ?? "TWD"))
+                        .keyboardType(.decimalPad)
 
-            Section {
-                Text(checkAmount, format: .currency(code: Locale.current.currencyCode ?? "TWD"))
+                    Picker("Number of People", selection: $numberOfPeople) {
+                        ForEach(2..<100) {
+                            Text("\($0) people")
+                        }
+                    }
+                }
+
+                Section {
+                    Text(checkAmount, format: .currency(code: Locale.current.currencyCode ?? "TWD"))
+                }
             }
+            .navigationTitle("WeSplit")
         }
     }
 }
