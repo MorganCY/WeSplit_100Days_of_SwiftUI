@@ -12,14 +12,12 @@ struct ContentView: View {
     @State private var numberOfPeople = 2
     @State private var tipPercentage = 20
 
-    let tipPercentages = [10, 15, 20, 0]
+    let tipPercentages = [10, 15, 20, 25, 0]
 
     var body: some View {
         NavigationView {
             Form {
                 Section {
-                    // $ represents two-way binding
-                    // replace text with value to implicate the double property
                     TextField("Amount", value: $checkAmount, format: .currency(code: Locale.current.currencyCode ?? "TWD"))
                         .keyboardType(.decimalPad)
 
@@ -28,6 +26,18 @@ struct ContentView: View {
                             Text("\($0) people")
                         }
                     }
+                }
+
+                Section {
+                    Picker("Tip percentage", selection: $tipPercentage) {
+                        // \.self refers to each number is unique
+                        ForEach(tipPercentages, id: \.self) {
+                            Text($0, format: .percent)
+                        }
+                    }
+                    .pickerStyle(.segmented)
+                } header: {
+                    Text("How much tip do you want to leave?")
                 }
 
                 Section {
